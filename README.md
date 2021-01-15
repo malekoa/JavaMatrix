@@ -2,9 +2,9 @@
 
 For learning java!
 
-## Usage
+## Compiling and running
 
-Run ```sh java.sh run``` from the main project folder.
+`sh java.sh run` compiles and runs the program from the main class.
 
 ## Fraction class
 
