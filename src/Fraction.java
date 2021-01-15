@@ -1,3 +1,5 @@
+package src;
+
 public class Fraction {
     private long numerator;
     private long denominator;
