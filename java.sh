@@ -1,0 +1,29 @@
+if [[ $# -eq 0 ]]; then
+    echo "Takes one argument, run or init"
+    exit 1
+fi
+
+if [[ $1 == "run" ]]; then
+  clear && javac -d bin src/*.java && cd bin && java Main && cd ..
+fi
+
+if [[ $1 == "init" ]]; then
+
+    if [[ ! -d "bin" ]]; then
+        mkdir bin
+        mkdir src
+        touch .gitignore
+        touch README.md
+        touch src/Main.java
+        echo "//
+public class Main {
+    public static void main(String[] args) {
+        // todo
+    }
+}
+    " > src/Main.java
+    echo "Done!"
+    else
+        echo "Project already initialized"
+    fi
+fi
