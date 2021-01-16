@@ -100,3 +100,40 @@ Matrix m = new Matrix(3, 3);
 // set all entries to a random number between 0 and 20
 m.randomize(20);
 ```
+
+#### .add()
+Returns a `Matrix` instance that is the sum of the two `Matrix` instances. Throws an exception if the arrays have different sizes.
+```java
+// construct two 3x3 matrices
+Matrix m1 = new Matrix(3, 3);
+Matrix m2 = new Matrix(3, 3);
+// randomize entries in all matrices
+m1.randomize(10);
+m2.randomize(10);
+// get m1 + m2
+Matrix sum = m1.add(m2);
+```
+
+#### .subtract()
+Returns a `Matrix` instance that is the difference of the two `Matrix` instances. Throws an exception if the arrays have different sizes.
+```java
+// construct two 3x3 matrices
+Matrix m1 = new Matrix(3, 3);
+Matrix m2 = new Matrix(3, 3);
+// randomize entries in all matrices
+m1.randomize(10);
+m2.randomize(10);
+// get m1 + m2
+Matrix difference = m1.subtract(m2);
+```
+
+#### .scale()
+Returns a `Matrix` instance that is scaled to the given scalar.
+```java
+// construct two 3x3 matrices
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Matrix scaledMatrix = m1.scale(5); // multiplies all entries in m1 by 5
+```

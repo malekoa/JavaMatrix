@@ -1,9 +1,17 @@
 public class Main {
 
     public static void main(String[] args) {
-        Matrix m = new Matrix(3, 4);
-        m.randomize(10);
-        m.showSelf();
+        Matrix m1 = new Matrix(3, 3);
+        
+        m1.randomize(10);
+
+        m1.showSelf();
+
+        System.out.println("\n-------\n");
+
+        Matrix scaled = m1.scale(5);
+
+        scaled.showSelf();
         
     }
 }
