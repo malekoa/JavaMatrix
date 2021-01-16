@@ -6,7 +6,7 @@ For learning java!
 
 `sh java.sh run` compiles and runs the program from the main class.
 
-### Fraction class
+## Fraction class
 
 #### Constructor
 Constructs a `Fraction` instance. Takes a `long` numerator and a `long` denominator.
@@ -74,7 +74,7 @@ long gcd = f.getGCD(10, 20); // -> returns 10
 #### .reduce()
 Reduces fraction to lowest terms. Used by the `Fraction` constructor to reduce reducible fractions.
 
-### Matrix class
+## Matrix class
 
 #### Constructor
 Constructs a `Matrix` instance. Takes an `int` rows and an `int` columns.
