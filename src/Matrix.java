@@ -1,6 +1,5 @@
-package src;
-
 import java.util.Arrays;
+import java.util.Random;
 
 public class Matrix {
     int rows;
@@ -12,9 +11,21 @@ public class Matrix {
         this.columns = columns;
         this.data = new Fraction[rows][columns];
 
+        // Makes zero matrix
         for(int row = 0; row < this.rows; row++) {
             for(int col = 0; col < this.columns; col++) {
-                data[row][col] = new Fraction(col, 3);
+                data[row][col] = new Fraction(0, 1);
+            }
+        }
+    }
+
+    // sets all entries in a matrix instance to a random number in
+    // in range 0, randRange
+    public void randomize(int randRange) {
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                int num = getRandomNumber(randRange);
+                this.data[row][col] = new Fraction(num, 1);
             }
         }
     }
@@ -31,5 +42,10 @@ public class Matrix {
         for(int row = 0; row < this.rows; row++) {
             System.out.println(Arrays.toString(stringRep[row]));
         }
+    }
+
+    // returns a random integer from 0 to range
+    private int getRandomNumber(int range) {
+        return new Random().nextInt(range);
     }
 }

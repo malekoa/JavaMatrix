@@ -1,5 +1,3 @@
-package src;
-
 public class Fraction {
     private long numerator;
     private long denominator;
@@ -64,7 +62,7 @@ public class Fraction {
     }
 
     // reduces fraction to lowest terms, i.e. 50/4 -> 25/2
-    public void reduce() {
+    private void reduce() {
         long gcd = this.getGCD(this.getNumerator(), this.getDenominator());
         this.numerator = (this.getNumerator() / gcd);
         this.denominator = (this.getDenominator() / gcd);

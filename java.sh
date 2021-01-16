@@ -4,7 +4,7 @@ if [[ $# -eq 0 ]]; then
 fi
 
 if [[ $1 == "run" ]]; then
-  clear && javac -d bin src/*.java && cd bin && java Main && cd ..
+    clear && javac -d bin src/*.java && cd bin && java Main && cd ..
 fi
 
 if [[ $1 == "init" ]]; then
@@ -15,7 +15,7 @@ if [[ $1 == "init" ]]; then
         touch .gitignore
         touch README.md
         touch src/Main.java
-        echo "//
+        echo "// 
 public class Main {
     public static void main(String[] args) {
         // todo
