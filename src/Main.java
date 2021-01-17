@@ -9,9 +9,7 @@ public class Main {
 
         System.out.println("\n-------\n");
 
-        Matrix scaled = m1.scale(5);
-
-        scaled.showSelf();
+        m1.getColumn(1);
         
     }
 }

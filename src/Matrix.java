@@ -88,4 +88,18 @@ public class Matrix {
         }
         return scaledMatrix;
     }
+
+    // returns an array of Fractions that corresponds to the entries in the specified column
+    public Fraction[] getColumn(int column) { 
+        Fraction[] resultArray = new Fraction[this.rows];
+
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                if (col == column) {
+                    resultArray[row] = this.data[row][col];
+                }
+            }
+        }
+        return resultArray;
+    }
 }

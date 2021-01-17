@@ -1,3 +1,4 @@
+#!/bin/sh
 if [[ $# -eq 0 ]]; then
     echo "Takes one argument, run or init"
     exit 1
