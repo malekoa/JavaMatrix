@@ -74,10 +74,12 @@ long gcd = f.getGCD(10, 20); // -> returns 10
 #### .reduce()
 Reduces fraction to lowest terms. Used by the `Fraction` constructor to reduce reducible fractions.
 
+<hr>
+
 ## Matrix class
 
 #### Constructor
-Constructs a `Matrix` instance. Takes an `int` rows and an `int` columns.
+Constructs a `Matrix` instance. Takes an `int` for rows and an `int` for columns.
 ```java
 // construct a 3x4 matrix
 Matrix m = new Matrix(3, 4);
@@ -88,8 +90,8 @@ Sets all entries in the `Matrix` instance to a random integer between 0 and `ran
 ```java
 // construct a 3x3 matrix
 Matrix m = new Matrix(3, 3);
-// set all entries to a random number between 0 and 20
-m.randomize(20);
+
+m.randomize(10); // set all entries to a random number between 0 and 10
 ```
 
 #### .showSelf()
@@ -99,10 +101,12 @@ Prints the `Matrix` instance to the console.
 Matrix m = new Matrix(3, 3);
 // set all entries to a random number between 0 and 20
 m.randomize(20);
+
+m.showSelf(); // prints 'm' to console
 ```
 
 #### .add()
-Returns a `Matrix` instance that is the sum of the two `Matrix` instances. Throws an exception if the arrays have different sizes.
+Returns a `Matrix` instance that is the sum of the two `Matrix` instances. Throws an exception if the arrays have different sizes. Takes another `Matrix` instance.
 ```java
 // construct two 3x3 matrices
 Matrix m1 = new Matrix(3, 3);
@@ -110,12 +114,12 @@ Matrix m2 = new Matrix(3, 3);
 // randomize entries in all matrices
 m1.randomize(10);
 m2.randomize(10);
-// get m1 + m2
-Matrix sum = m1.add(m2);
+
+Matrix sum = m1.add(m2); // returns the result of m1 + m2
 ```
 
 #### .subtract()
-Returns a `Matrix` instance that is the difference of the two `Matrix` instances. Throws an exception if the arrays have different sizes.
+Returns a `Matrix` instance that is the difference of the two `Matrix` instances. Throws an exception if the arrays have different sizes. Takes another `Matrix` instance.
 ```java
 // construct two 3x3 matrices
 Matrix m1 = new Matrix(3, 3);
@@ -123,17 +127,40 @@ Matrix m2 = new Matrix(3, 3);
 // randomize entries in all matrices
 m1.randomize(10);
 m2.randomize(10);
-// get m1 + m2
-Matrix difference = m1.subtract(m2);
+
+Matrix difference = m1.subtract(m2); // returns the result of m1 - m2
 ```
 
 #### .scale()
-Returns a `Matrix` instance that is scaled to the given scalar.
+Returns a `Matrix` instance that is scaled to the given scalar. Takes an `int`.
 ```java
-// construct two 3x3 matrices
+// construct a 3x3 matrix
 Matrix m1 = new Matrix(3, 3);
 // randomize entries
 m1.randomize(10);
 
-Matrix scaledMatrix = m1.scale(5); // multiplies all entries in m1 by 5
+Matrix scaledMatrix = m1.scale(5); // scales all entries in m1 by 5
+```
+
+#### .getColumn()
+Returns an array of type `Fraction` that corresponds to the entries in the specified column. Takes an `int`.
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Matrix getColumn = m1.getColumn(0); // returns the 0th column of matrix m1
+```
+
+#### .transpose()
+Returns a `Matrix` instance that is the transpose of the given `Matrix`. Takes a `Matrix` instance.
+
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Matrix mTranspose = m1.transpose(); // returns the transpose of Matrix 'm1'
 ```

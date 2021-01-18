@@ -60,6 +60,7 @@ public class Matrix {
                 sum.data[row][col] = this.data[row][col].add(addend.data[row][col]);
             }
         }
+        
         return sum;
     }
 
@@ -74,6 +75,7 @@ public class Matrix {
                 difference.data[row][col] = this.data[row][col].subtract(addend.data[row][col]);
             }
         }
+
         return difference;
     }
 
@@ -86,6 +88,7 @@ public class Matrix {
                 scaledMatrix.data[row][col] = this.data[row][col].multiply(scalarFraction);
             }
         }
+
         return scaledMatrix;
     }
 
@@ -100,6 +103,20 @@ public class Matrix {
                 }
             }
         }
+
         return resultArray;
+    }
+
+    // returns a Matrix instance that is the transpose of the given instance
+    public Matrix transpose() {
+        Matrix transpose = new Matrix(this.rows, this.columns);
+        
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                transpose.data[row][col] = this.getColumn(row)[col];
+            }
+        }
+
+        return transpose;
     }
 }

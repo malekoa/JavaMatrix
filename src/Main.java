@@ -9,7 +9,9 @@ public class Main {
 
         System.out.println("\n-------\n");
 
-        m1.getColumn(1);
+        Matrix transpose = m1.transpose();
+
+        transpose.showSelf();
         
     }
 }
