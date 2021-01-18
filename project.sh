@@ -5,12 +5,17 @@ if [[ $# -eq 0 ]]; then
 fi
 
 if [[ $1 == "run" ]]; then
-    clear && javac -d bin src/*.java && cd bin && java Main && cd ..
+    if [[ ! -d "bin" ]]; then
+        echo "Error: Project must be initialized before running"
+    else
+        clear && javac -d bin src/*.java && cd bin && java Main && cd ..
+    fi
 fi
 
 if [[ $1 == "init" ]]; then
 
     if [[ ! -d "bin" ]]; then
+        chmod +x project.sh
         mkdir bin
         mkdir src
         touch .gitignore
