@@ -131,6 +131,19 @@ m2.randomize(10);
 Matrix difference = m1.subtract(m2); // returns the result of m1 - m2
 ```
 
+#### .multiply()
+Returns a `Matrix` instance that is the product of the two `Matrix` instances. Throws an exception if the arrays have incompatible sizes. Takes another `Matrix` instance.
+```java
+// construct two 3x3 matrices
+Matrix m1 = new Matrix(3, 3);
+Matrix m2 = new Matrix(3, 3);
+// randomize entries in all matrices
+m1.randomize(10);
+m2.randomize(10);
+
+Matrix product = m1.multiply(m2); // returns the result of m1 * m2
+```
+
 #### .scale()
 Returns a `Matrix` instance that is scaled to the given scalar. Takes an `int`.
 ```java

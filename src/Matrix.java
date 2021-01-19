@@ -79,6 +79,34 @@ public class Matrix {
         return difference;
     }
 
+    // returns the product of two Matrix instances
+    public void multiply(Matrix multiplicand) {
+        if (this.columns != multiplicand.rows) {
+            throw new ArithmeticException("this.columns = " + this.columns + " | multiplicand.rows = " + multiplicand.rows + " - These two must be equal.");
+        }
+        this.showSelf();
+        System.out.println("x");
+        multiplicand.showSelf();
+        System.out.println("=\n");
+
+        Matrix product = new Matrix(this.rows, multiplicand.columns);
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < multiplicand.columns; col++) {
+                // get row data from 1st matrix and column data from second matrix
+                Fraction[] rowData = this.data[row];
+                Fraction[] colData = multiplicand.getColumn(col);
+                Fraction result = new Fraction(0, 1);
+                // for each item in the arrays, get the product of each respective entry then sum them.
+                for (int entry = 0; entry < rowData.length; entry++) {
+                    result = result.add( rowData[entry].multiply(colData[entry]) );
+                }
+                product.data[row][col] = result;
+            }
+        }
+
+        product.showSelf();
+    }
+
     // returns a Matrix instance that is scaled to the scalar
     public Matrix scale(int scalar) {
         Matrix scaledMatrix = new Matrix(this.rows, this.columns);
