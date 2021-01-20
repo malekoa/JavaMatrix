@@ -189,3 +189,15 @@ m1.randomize(10);
 
 Matrix minor = m1.minor(0, 0); // returns the minor of Matrix 'm1' in relation to the entry in the 1st column and 1st row
 ```
+
+#### .determinant()
+Returns a `Fraction` instance that is the determinant of the given `Matrix`. Throws an exception if the `Matrix` is not square (if rows != columns).
+
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Fraction det = m1.determinant(); // returns the determinant of m1
+```

@@ -177,4 +177,26 @@ public class Matrix {
         }
         return minor;
     }
+
+    // returns a Fraction that is the determinant of the given matrix using cofactor expansion
+    public Fraction determinant() {
+        if (this.rows != this.columns) {
+            throw new ArithmeticException("Rows must equal columns to get determinant");
+        }
+        Fraction result = new Fraction(0, 1);
+        if(this.rows == 2){
+            result =  (this.data[0][0].multiply(this.data[1][1])).subtract(this.data[0][1].multiply(this.data[1][0]));
+        }
+        if(this.rows > 2) {
+            for (int row = 0; row < this.rows; row++) {
+                if (row % 2 == 0) {
+                    result = result.add(this.data[row][0].multiply(this.minorMatrix(row, 0).determinant()));
+                } else {
+                    result = result.subtract(this.data[row][0].multiply(this.minorMatrix(row, 0).determinant()));
+                }
+            }
+        }
+        return result;
+    }
+
 }

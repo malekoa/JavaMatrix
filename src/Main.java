@@ -9,8 +9,8 @@ public class Main {
 
         System.out.println("\n-----\n");
         
-        Matrix minor = m1.minorMatrix(2, 2);
+        Fraction det = m1.determinant();
 
-        minor.showSelf();
+        System.out.println("Determinant: " + det.getString());
     }
 }
