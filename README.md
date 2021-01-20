@@ -4,7 +4,7 @@ For learning java!
 
 ## Compiling and running
 
-`sh java.sh run` compiles and runs the program from the main class.
+`sh project.sh run` compiles and runs the program from the main class.
 
 ## Fraction class
 
