@@ -177,3 +177,15 @@ m1.randomize(10);
 
 Matrix mTranspose = m1.transpose(); // returns the transpose of Matrix 'm1'
 ```
+
+#### .minorMatrix()
+Returns a `Matrix` instance that is the minor of the matrix in relation to the given entry position. Takes an `int` for entryRow and an `int` for entryColumn.
+
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Matrix minor = m1.minor(0, 0); // returns the minor of Matrix 'm1' in relation to the entry in the 1st column and 1st row
+```

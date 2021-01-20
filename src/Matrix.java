@@ -80,7 +80,7 @@ public class Matrix {
     }
 
     // returns the product of two Matrix instances
-    public void multiply(Matrix multiplicand) {
+    public Matrix multiply(Matrix multiplicand) {
         if (this.columns != multiplicand.rows) {
             throw new ArithmeticException("this.columns = " + this.columns + " | multiplicand.rows = " + multiplicand.rows + " - These two must be equal.");
         }
@@ -104,7 +104,7 @@ public class Matrix {
             }
         }
 
-        product.showSelf();
+        return product;
     }
 
     // returns a Matrix instance that is scaled to the scalar
@@ -146,5 +146,35 @@ public class Matrix {
         }
 
         return transpose;
+    }
+
+    // returns a Matrix instance that is the minor matrix of the specified entry
+    public Matrix minorMatrix(int entryRow, int entryCol) {
+        if(entryRow >= this.rows || entryCol >= this.columns) {
+            throw new ArithmeticException("Error: rows or columns out of range. entryRow and entryCol must be smaller than this.rows and this.columns");
+        }
+        Matrix minor = new Matrix(this.rows - 1, this.columns - 1);
+        Fraction[] values = new Fraction[(minor.rows * minor.columns)];
+
+        // fill up values with the entries in the matrix that aren't in the row and column
+        int counter = 0;
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                if (row != entryRow && col != entryCol) {
+                    values[counter] = this.data[row][col];
+                    counter++;
+                }
+            }
+        }
+
+        // place the acquired values into the minor matrix
+        counter = 0;
+        for (int row = 0; row < minor.rows; row++) {
+            for (int col = 0; col < minor.columns; col++) {
+                minor.data[row][col] = values[counter];
+                counter++;
+            }
+        }
+        return minor;
     }
 }
