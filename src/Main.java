@@ -9,12 +9,10 @@ public class Main {
 
         System.out.println("\n-----\n");
 
-        Fraction mult = new Fraction(-1, 1);
+        Fraction det = m1.determinant();
+        System.out.println("determinant: " + det.getString());
+        m1.fastDeterminant();
+        
 
-        m1.rowOperation(0, 1, mult);
-
-        System.out.println("\n-----\n");
-
-        m1.showSelf();
     }
 }

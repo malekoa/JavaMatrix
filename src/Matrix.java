@@ -201,7 +201,7 @@ public class Matrix {
     }
 
     // takes operatorRow, multiplies it by the multiplier and adds it do operatingRow
-    public void rowOperation(int operatorRowPos, int operatingRowPos, Fraction multiplier) {
+    public Matrix rowOperation(int operatorRowPos, int operatingRowPos, Fraction multiplier) {
         Matrix resultMatrix = new Matrix(this.rows, this.columns);
         // use arrays.copyOf to not pass the reference and not change the original array
         resultMatrix.data = Arrays.copyOf(this.data, this.data.length);
@@ -220,10 +220,96 @@ public class Matrix {
         // insert operatingRow into resultMatrix at operatingRowPos
         resultMatrix.data[operatingRowPos] = operatingRow;
 
-        resultMatrix.showSelf();
+        return resultMatrix;
     }
 
-    public void makeTriangular() {
+    // returns the value of entry at position
+    public Fraction getEntry(int row, int col) {
+        return this.data[row][col];
+    }
+
+    // find row after rowPosition with nonzero entry at colPosition, returns the position of that row (int)
+    // returns -1 if no row with nonzero entry at colPosition is found
+    public int findUsableRow(int rowPosition, int colPosition) {
+
+        for (int row = rowPosition + 1; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                if (colPosition == col) {
+                    //System.out.println(this.data[row][col].getString()); 
+                    if(this.data[row][col].getNumerator() != 0) {
+                        return row;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    // takes rowPosition and colPosition and, if it finds a useable row below it (a row where the entry at the same column is nonzero...),
+    // adds it to row at rowPosition, then returns the matrix
+    public Matrix makeUsable(int rowPosition, int colPosition) {
+        Matrix usableMatrix = new Matrix(this.rows, this.columns);
+        usableMatrix.data = Arrays.copyOf(this.data, this.data.length);
+        int usableRowPosition = this.findUsableRow(rowPosition, colPosition);
+        if (usableRowPosition >= 0) {
+            // takes row at usableRowPosition and adds it to rowPosition
+            usableMatrix = this.rowOperation(usableRowPosition, rowPosition, new Fraction(1, 1));
+        }
+        return usableMatrix;
+    }
+
+    
+    public Matrix subtractDown(int rowPosition, int colPosition) {
+        Matrix workingMatrix = new Matrix(this.rows, this.columns);
+        workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
+        
+        for (int rowBelow = rowPosition + 1; rowBelow < workingMatrix.rows; rowBelow++) {
+            // get right ratio
+            Fraction mult = new Fraction(workingMatrix.data[rowBelow][colPosition], workingMatrix.data[rowPosition][colPosition]);
+            // multiply it by -1 because we're subtracting
+            mult = mult.multiply(new Fraction(-1, 1));
+            // perform row operation
+            workingMatrix = workingMatrix.rowOperation(rowPosition, rowBelow, mult);
+        }
+
+        return workingMatrix;
+    }
+
+    public Matrix makeUpperTriangular() {
+        Matrix workingMatrix = new Matrix(this.rows, this.columns);
+        workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
         // make the matrix triangular using only elementary row operations (to avoid dealing with factorization)
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                if(row == col) {
+                    //System.out.println(workingMatrix.data[row][col].getNumerator());
+                    if(workingMatrix.data[row][col].getNumerator() == 0) {
+                        workingMatrix = workingMatrix.makeUsable(row, col);
+                    }
+                    workingMatrix = workingMatrix.subtractDown(row, col);
+                }
+            }
+        }
+        return workingMatrix;
+    }
+
+    public void fastDeterminant() {
+        Matrix workingMatrix = new Matrix(this.rows, this.columns);
+        workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
+        workingMatrix = workingMatrix.makeUpperTriangular();
+
+        System.out.println("~~~~~~~~~~");
+        workingMatrix.showSelf();
+        System.out.println("~~~~~~~~~~");
+
+        Fraction result = new Fraction(1,1);
+        for (int row = 0; row < workingMatrix.rows; row++) {
+            for (int col = 0; col < workingMatrix.rows; col++) {
+                if (row == col) {
+                    result = result.multiply(workingMatrix.data[row][col]);
+                }
+            }
+        }
+        System.out.println("fastDeterminant: " + result.getString());
     }
 }

@@ -12,6 +12,16 @@ public class Fraction {
         this.reduce();
     }
 
+    Fraction(Fraction numerator, Fraction denominator) {
+        if(denominator.getNumerator() == 0) {
+            throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
+        }
+        Fraction quotient = numerator.divide(denominator);
+        this.numerator = quotient.numerator;
+        this.denominator = quotient.denominator;
+        this.reduce();
+    }
+
     public long getDenominator() {
         return denominator;
     }
