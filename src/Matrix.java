@@ -234,11 +234,8 @@ public class Matrix {
 
         for (int row = rowPosition + 1; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
-                if (colPosition == col) {
-                    //System.out.println(this.data[row][col].getString()); 
-                    if(this.data[row][col].getNumerator() != 0) {
-                        return row;
-                    }
+                if (colPosition == col && this.data[row][col].getNumerator() != 0) {
+                    return row;
                 }
             }
         }
@@ -264,6 +261,10 @@ public class Matrix {
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
         
         for (int rowBelow = rowPosition + 1; rowBelow < workingMatrix.rows; rowBelow++) {
+            // if denominator will be 0, return workingMatrix with no changes
+            if(workingMatrix.data[rowPosition][colPosition].getNumerator() == 0) {
+                return workingMatrix;
+            }
             // get right ratio
             Fraction mult = new Fraction(workingMatrix.data[rowBelow][colPosition], workingMatrix.data[rowPosition][colPosition]);
             // multiply it by -1 because we're subtracting
@@ -282,7 +283,6 @@ public class Matrix {
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 if(row == col) {
-                    //System.out.println(workingMatrix.data[row][col].getNumerator());
                     if(workingMatrix.data[row][col].getNumerator() == 0) {
                         workingMatrix = workingMatrix.makeUsable(row, col);
                     }
@@ -293,14 +293,10 @@ public class Matrix {
         return workingMatrix;
     }
 
-    public void fastDeterminant() {
+    public Fraction fastDeterminant() {
         Matrix workingMatrix = new Matrix(this.rows, this.columns);
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
         workingMatrix = workingMatrix.makeUpperTriangular();
-
-        System.out.println("~~~~~~~~~~");
-        workingMatrix.showSelf();
-        System.out.println("~~~~~~~~~~");
 
         Fraction result = new Fraction(1,1);
         for (int row = 0; row < workingMatrix.rows; row++) {
@@ -311,5 +307,6 @@ public class Matrix {
             }
         }
         System.out.println("fastDeterminant: " + result.getString());
+        return result;
     }
 }

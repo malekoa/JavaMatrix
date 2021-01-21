@@ -6,6 +6,11 @@ For learning java!
 
 `sh project.sh run` compiles and runs the program from the main class.
 
+## To do
+
+- [ ] Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`
+- [ ] Method for inverting `Matrix` instance
+
 ## Fraction class
 
 #### Constructor
@@ -191,7 +196,7 @@ Matrix minor = m1.minor(0, 0); // returns the minor of Matrix 'm1' in relation t
 ```
 
 #### .determinant()
-Returns a `Fraction` instance that is the determinant of the given `Matrix`. Throws an exception if the `Matrix` is not square (if rows != columns).
+Returns a `Fraction` instance that is the determinant of the given `Matrix`. Finds the determinant using Laplace expansion = very slow. If you want to get the result faster, use `.fastDeterminant()`. Throws an exception if the `Matrix` is not square (if rows != columns).
 
 ```java
 // construct a 3x3 matrix
@@ -215,3 +220,6 @@ Fraction mult = new Fraction(2, 1);
 
 Fraction operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*row1 to row2
 ```
+
+#### .fastDeterminant()
+Returns a `Fraction` instance that is the determinant of the given `Matrix`. Uses `.makeUpperTriangular()` and so is much faster than `.determinant()`. 
