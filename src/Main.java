@@ -8,9 +8,13 @@ public class Main {
         m1.showSelf();
 
         System.out.println("\n-----\n");
-        
-        Fraction det = m1.determinant();
 
-        System.out.println("Determinant: " + det.getString());
+        Fraction mult = new Fraction(-1, 1);
+
+        m1.rowOperation(0, 1, mult);
+
+        System.out.println("\n-----\n");
+
+        m1.showSelf();
     }
 }

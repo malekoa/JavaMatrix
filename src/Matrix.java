@@ -187,7 +187,8 @@ public class Matrix {
         if(this.rows == 2){
             result =  (this.data[0][0].multiply(this.data[1][1])).subtract(this.data[0][1].multiply(this.data[1][0]));
         }
-        if(this.rows > 2) {
+        // implement rule of Sarrus for 3x3 matrix
+        if(this.rows >= 3) {
             for (int row = 0; row < this.rows; row++) {
                 if (row % 2 == 0) {
                     result = result.add(this.data[row][0].multiply(this.minorMatrix(row, 0).determinant()));
@@ -199,4 +200,30 @@ public class Matrix {
         return result;
     }
 
+    // takes operatorRow, multiplies it by the multiplier and adds it do operatingRow
+    public void rowOperation(int operatorRowPos, int operatingRowPos, Fraction multiplier) {
+        Matrix resultMatrix = new Matrix(this.rows, this.columns);
+        // use arrays.copyOf to not pass the reference and not change the original array
+        resultMatrix.data = Arrays.copyOf(this.data, this.data.length);
+        
+        Fraction[] operatorRow = Arrays.copyOf(this.data[operatorRowPos], this.data[operatorRowPos].length);
+        Fraction[] operatingRow = Arrays.copyOf(this.data[operatingRowPos], this.data[operatingRowPos].length);
+
+        // multiplies all entries in operatorRow array by the multiplier
+        for (int entry = 0; entry < operatorRow.length; entry++) {
+            operatorRow[entry] = operatorRow[entry].multiply(multiplier);
+        }
+        // adds each entry in operatorRow to operatingRow
+        for (int entry = 0; entry < operatingRow.length; entry++) {
+            operatingRow[entry] = operatingRow[entry].add(operatorRow[entry]);
+        }
+        // insert operatingRow into resultMatrix at operatingRowPos
+        resultMatrix.data[operatingRowPos] = operatingRow;
+
+        resultMatrix.showSelf();
+    }
+
+    public void makeTriangular() {
+        // make the matrix triangular using only elementary row operations (to avoid dealing with factorization)
+    }
 }

@@ -201,3 +201,17 @@ m1.randomize(10);
 
 Fraction det = m1.determinant(); // returns the determinant of m1
 ```
+
+#### .rowOperation()
+Returns a `Matrix` instance that is the result of an elementary row operation. Takes row at position `int` operatorRow, multiplies it by `Fraction` multiplier and adds it to row at position `int` operatingRow.
+
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+// make multiplier Fraction
+Fraction mult = new Fraction(2, 1);
+
+Fraction operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*row1 to row2
+```
