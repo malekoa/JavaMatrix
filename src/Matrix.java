@@ -1,7 +1,12 @@
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Matrix {
+
+    static final BigInteger ZERO_BIG_INTEGER = new BigInteger("0");
+    static final BigInteger ONE_BIG_INTEGER = new BigInteger("1");
+
     int rows;
     int columns;
     Fraction[][] data;
@@ -12,9 +17,11 @@ public class Matrix {
         this.data = new Fraction[rows][columns];
 
         // Makes zero matrix
+        //BigInteger zero = new BigInteger("0");
+        //BigInteger one = new BigInteger("1");
         for(int row = 0; row < this.rows; row++) {
             for(int col = 0; col < this.columns; col++) {
-                data[row][col] = new Fraction(0, 1);
+                data[row][col] = new Fraction(ZERO_BIG_INTEGER, ONE_BIG_INTEGER);
             }
         }
     }
@@ -30,7 +37,9 @@ public class Matrix {
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 int num = getRandomNumber(randRange);
-                this.data[row][col] = new Fraction(num, 1);
+                BigInteger randBigInteger = new BigInteger(Integer.toString(num));
+                // BigInteger one = new BigInteger("1");
+                this.data[row][col] = new Fraction(randBigInteger, ONE_BIG_INTEGER);
             }
         }
     }
@@ -95,7 +104,7 @@ public class Matrix {
                 // get row data from 1st matrix and column data from second matrix
                 Fraction[] rowData = this.data[row];
                 Fraction[] colData = multiplicand.getColumn(col);
-                Fraction result = new Fraction(0, 1);
+                Fraction result = new Fraction(ZERO_BIG_INTEGER, ONE_BIG_INTEGER);
                 // for each item in the arrays, get the product of each respective entry then sum them.
                 for (int entry = 0; entry < rowData.length; entry++) {
                     result = result.add( rowData[entry].multiply(colData[entry]) );
@@ -108,9 +117,9 @@ public class Matrix {
     }
 
     // returns a Matrix instance that is scaled to the scalar
-    public Matrix scale(int scalar) {
+    public Matrix scale(BigInteger scalar) {
         Matrix scaledMatrix = new Matrix(this.rows, this.columns);
-        Fraction scalarFraction = new Fraction(scalar, 1);
+        Fraction scalarFraction = new Fraction(scalar, ONE_BIG_INTEGER);
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 scaledMatrix.data[row][col] = this.data[row][col].multiply(scalarFraction);
@@ -183,7 +192,7 @@ public class Matrix {
         if (this.rows != this.columns) {
             throw new ArithmeticException("Rows must equal columns to get determinant");
         }
-        Fraction result = new Fraction(0, 1);
+        Fraction result = new Fraction(ZERO_BIG_INTEGER, ONE_BIG_INTEGER);
         if(this.rows == 2){
             result =  (this.data[0][0].multiply(this.data[1][1])).subtract(this.data[0][1].multiply(this.data[1][0]));
         }
@@ -234,7 +243,7 @@ public class Matrix {
 
         for (int row = rowPosition + 1; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
-                if (colPosition == col && this.data[row][col].getNumerator() != 0) {
+                if (colPosition == col && !this.data[row][col].getNumerator().equals(ZERO_BIG_INTEGER)) {
                     return row;
                 }
             }
@@ -250,7 +259,7 @@ public class Matrix {
         int usableRowPosition = this.findUsableRow(rowPosition, colPosition);
         if (usableRowPosition >= 0) {
             // takes row at usableRowPosition and adds it to rowPosition
-            usableMatrix = this.rowOperation(usableRowPosition, rowPosition, new Fraction(1, 1));
+            usableMatrix = this.rowOperation(usableRowPosition, rowPosition, new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER));
         }
         return usableMatrix;
     }
@@ -262,13 +271,14 @@ public class Matrix {
         
         for (int rowBelow = rowPosition + 1; rowBelow < workingMatrix.rows; rowBelow++) {
             // if denominator will be 0, return workingMatrix with no changes
-            if(workingMatrix.data[rowPosition][colPosition].getNumerator() == 0) {
+            if(workingMatrix.data[rowPosition][colPosition].getNumerator().equals(ZERO_BIG_INTEGER)) {
                 return workingMatrix;
             }
             // get right ratio
             Fraction mult = new Fraction(workingMatrix.data[rowBelow][colPosition], workingMatrix.data[rowPosition][colPosition]);
             // multiply it by -1 because we're subtracting
-            mult = mult.multiply(new Fraction(-1, 1));
+            BigInteger negativeOneBigInteger = new BigInteger("-1");
+            mult = mult.multiply(new Fraction(negativeOneBigInteger, ONE_BIG_INTEGER));
             // perform row operation
             workingMatrix = workingMatrix.rowOperation(rowPosition, rowBelow, mult);
         }
@@ -283,7 +293,7 @@ public class Matrix {
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 if(row == col) {
-                    if(workingMatrix.data[row][col].getNumerator() == 0) {
+                    if(workingMatrix.data[row][col].getNumerator().equals(ZERO_BIG_INTEGER)) {
                         workingMatrix = workingMatrix.makeUsable(row, col);
                     }
                     workingMatrix = workingMatrix.subtractDown(row, col);
@@ -298,7 +308,7 @@ public class Matrix {
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
         workingMatrix = workingMatrix.makeUpperTriangular();
 
-        Fraction result = new Fraction(1,1);
+        Fraction result = new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER);
         for (int row = 0; row < workingMatrix.rows; row++) {
             for (int col = 0; col < workingMatrix.rows; col++) {
                 if (row == col) {

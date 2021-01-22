@@ -1,10 +1,13 @@
+import java.math.BigInteger;
+
 public class Fraction {
-    private long numerator;
-    private long denominator;
+    private BigInteger numerator;
+    private BigInteger denominator;
 
     // constructor
-    Fraction(long numerator, long denominator) {
-        if(denominator == 0) {
+    Fraction(BigInteger numerator, BigInteger denominator) {
+        BigInteger zero = new BigInteger("0");
+        if(denominator.equals(zero)) {
             throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
         }
         this.numerator = numerator;
@@ -13,7 +16,8 @@ public class Fraction {
     }
 
     Fraction(Fraction numerator, Fraction denominator) {
-        if(denominator.getNumerator() == 0) {
+        BigInteger zero = new BigInteger("0");
+        if(denominator.getNumerator().equals(zero)) {
             throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
         }
         Fraction quotient = numerator.divide(denominator);
@@ -22,18 +26,18 @@ public class Fraction {
         this.reduce();
     }
 
-    public long getDenominator() {
+    public BigInteger getDenominator() {
         return denominator;
     }
 
-    public long getNumerator() {
+    public BigInteger getNumerator() {
         return numerator;
     }
 
     // returns a new Fraction instance that is the product of the multiplicand and the multiplier
     public Fraction multiply(Fraction multiplier) {
-        long resultNumerator = this.getNumerator() * multiplier.getNumerator();
-        long resultDenominator = this.getDenominator() * multiplier.getDenominator();
+        BigInteger resultNumerator = this.getNumerator().multiply(multiplier.getNumerator());
+        BigInteger resultDenominator = this.getDenominator().multiply(multiplier.getDenominator());
         return new Fraction(resultNumerator, resultDenominator);
     }
 
@@ -44,15 +48,15 @@ public class Fraction {
 
     // returns a new Fraction instance that is the sum of the two addends.
     public Fraction add(Fraction addend) {
-        long numerator = addend.getDenominator() * this.getNumerator() + this.getDenominator() * addend.getNumerator();
-        long denominator = this.getDenominator() * addend.getDenominator();
+        BigInteger numerator = addend.getDenominator().multiply(this.getNumerator()).add(this.getDenominator().multiply(addend.getNumerator()));
+        BigInteger denominator = this.getDenominator().multiply(addend.getDenominator());
         return new Fraction(numerator, denominator);
     }
 
     // returns a new matrix instance that is the difference between the minuend and the subtrahend
     public Fraction subtract(Fraction subtrahend) {
-        long numerator = subtrahend.getDenominator() * this.getNumerator() - this.getDenominator() * subtrahend.getNumerator();
-        long denominator = this.getDenominator() * subtrahend.getDenominator();
+        BigInteger numerator = subtrahend.getDenominator().multiply(this.getNumerator()).subtract(this.getDenominator().multiply(subtrahend.getNumerator()));
+        BigInteger denominator = this.getDenominator().multiply(subtrahend.getDenominator());
         return new Fraction(numerator, denominator);
     }
 
@@ -63,29 +67,33 @@ public class Fraction {
 
     // returns the fraction in string form and returns only the numerator if the denominator == 1
     public String getString() {
-        if(this.getDenominator() == 1) {
-            return Long.toString(this.getNumerator());
+        BigInteger one = new BigInteger("1");
+        if(this.getDenominator().equals(one)) {
+            return this.getNumerator().toString();
         }
-        String num = Long.toString(this.getNumerator());
-        String den = Long.toString(this.getDenominator());
+        String num = this.getNumerator().toString();
+        String den = this.getDenominator().toString();
         return num.concat("/").concat(den);
     }
 
     // reduces fraction to lowest terms, i.e. 50/4 -> 25/2
     private void reduce() {
-        long gcd = this.getGCD(this.getNumerator(), this.getDenominator());
-        this.numerator = (this.getNumerator() / gcd);
-        this.denominator = (this.getDenominator() / gcd);
-        if(this.getDenominator() < 0) {
-            this.numerator *= -1;
-            this.denominator *= -1;
+        BigInteger zero = new BigInteger("0");
+        BigInteger negOne = new BigInteger("-1");
+        BigInteger gcd = this.getGCD(this.getNumerator(), this.getDenominator());
+        this.numerator = (this.getNumerator().divide(gcd));
+        this.denominator = (this.getDenominator().divide(gcd));
+        if(this.getDenominator().compareTo(zero) < 0) {
+            this.numerator.multiply(negOne);
+            this.denominator.multiply(negOne);
         }
     }
 
     // returns the greatest common denominator of 'a' and 'b' using Euclid's algorithm
-    public long getGCD(long a, long b) {
-        long r = a % b;
-        if(r != 0) {
+    public BigInteger getGCD(BigInteger a, BigInteger b) {
+        BigInteger r = a.remainder(b);
+        BigInteger zero = new BigInteger("0");
+        if(!r.equals(zero)) {
             return this.getGCD(b, r);
         }
         return b;

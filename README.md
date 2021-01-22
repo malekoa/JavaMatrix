@@ -8,14 +8,14 @@ For learning java!
 
 ## To do
 
-- [ ] Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`
+- [x] Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`
 - [ ] Make `Fraction` constructor that takes a `BigDecimal` and converts the `Fraction` to `BigInteger`.
 - [ ] Method for inverting `Matrix` instance
 
 ## Fraction class
 
 #### Constructor
-Constructs a `Fraction` instance. Takes a `long` numerator and a `long` denominator.
+Constructs a `Fraction` instance. Takes a `BigInteger` numerator and a `BigInteger` denominator.
 ```java
 // construct a new fraction -> "1/2"
 Fraction f = new Fraction(1, 2);
@@ -92,7 +92,7 @@ Matrix m = new Matrix(3, 4);
 ```
 
 #### .randomize()
-Sets all entries in the `Matrix` instance to a random integer between 0 and `randRange`
+Sets all entries in the `Matrix` instance to a random integer between 0 and the `int` that it takes.
 ```java
 // construct a 3x3 matrix
 Matrix m = new Matrix(3, 3);

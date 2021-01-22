@@ -4,7 +4,7 @@ public class Main {
         final int SIZE = 25;
         Matrix m1 = new Matrix(SIZE, SIZE);
         
-        m1.randomize(2);
+        m1.randomize(10);
 
         m1.showSelf();
 
