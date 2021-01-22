@@ -9,7 +9,7 @@ For learning java!
 ## To do
 
 - [ ] Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`
-- [ ] Make `Fraction` constructor that takes a `float` or `long` so you can work with decimals.
+- [ ] Make `Fraction` constructor that takes a `BigDecimal` and converts the `Fraction` to `BigInteger`.
 - [ ] Method for inverting `Matrix` instance
 
 ## Fraction class
