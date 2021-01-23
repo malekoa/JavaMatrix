@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        final int SIZE = 20;
+        final int SIZE = 30;
         Matrix m1 = new Matrix(SIZE, SIZE);
         
         m1.randomize(10);

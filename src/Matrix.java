@@ -235,8 +235,8 @@ public class Matrix {
         return this.data[row][col];
     }
 
-    // find row after rowPosition with nonzero entry at colPosition, returns the position of that row (int)
-    // returns -1 if no row with nonzero entry at colPosition is found
+    // find row after rowPosition with nonzero entry at colPosition, returns the position of that row (int) returns -1 if no row 
+    // with nonzero entry at colPosition is found. Helper funciton for makeUsable().
     public int findUsableRow(int rowPosition, int colPosition) {
 
         for (int row = rowPosition + 1; row < this.rows; row++) {
@@ -250,19 +250,20 @@ public class Matrix {
     }
 
     // takes rowPosition and colPosition and, if it finds a useable row below it (a row where the entry at the same column is nonzero...),
-    // adds it to row at rowPosition, then returns the matrix
+    // adds it to row at rowPosition, then returns the matrix. Helper function for makeUpperTriangular().
     public Matrix makeUsable(int rowPosition, int colPosition) {
         Matrix usableMatrix = new Matrix(this.rows, this.columns);
         usableMatrix.data = Arrays.copyOf(this.data, this.data.length);
         int usableRowPosition = this.findUsableRow(rowPosition, colPosition);
         if (usableRowPosition >= 0) {
-            // takes row at usableRowPosition and adds it to rowPosition
+            // takes row at usableRowPosition and adds it to rowPosition (use ONE_BIG_INTEGER because we're adding itself x 1)
             usableMatrix = this.rowOperation(usableRowPosition, rowPosition, new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER));
         }
         return usableMatrix;
     }
 
-    
+    // does a rowOperation on each row below rowPosition. The goal is to make every entry under rowPosition @ colPosition = 0, using the
+    // entry @ rowPosition & colPosition. Helper function for makeUpperTriangular().
     public Matrix subtractDown(int rowPosition, int colPosition) {
         Matrix workingMatrix = new Matrix(this.rows, this.columns);
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
@@ -283,6 +284,7 @@ public class Matrix {
         return workingMatrix;
     }
 
+    // uses subtractDown down the main diagonal of the array to produce an upper triangular matrix. Helper function for fastDeterminant()
     public Matrix makeUpperTriangular() {
         Matrix workingMatrix = new Matrix(this.rows, this.columns);
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
