@@ -1,13 +1,16 @@
 import java.math.BigInteger;
 
 public class Fraction {
+    static final BigInteger ZERO_BIG_INTEGER = BigInteger.valueOf(0);
+    static final BigInteger ONE_BIG_INTEGER = BigInteger.valueOf(1);
+    static final BigInteger NEGATIVE_ONE_BIG_INTEGER = BigInteger.valueOf(-1);
+
     private BigInteger numerator;
     private BigInteger denominator;
 
     // constructor
     Fraction(BigInteger numerator, BigInteger denominator) {
-        BigInteger zero = new BigInteger("0");
-        if(denominator.equals(zero)) {
+        if(denominator.equals(ZERO_BIG_INTEGER)) {
             throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
         }
         this.numerator = numerator;
@@ -16,8 +19,7 @@ public class Fraction {
     }
 
     Fraction(Fraction numerator, Fraction denominator) {
-        BigInteger zero = new BigInteger("0");
-        if(denominator.getNumerator().equals(zero)) {
+        if(denominator.getNumerator().equals(ZERO_BIG_INTEGER)) {
             throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
         }
         Fraction quotient = numerator.divide(denominator);
@@ -67,8 +69,7 @@ public class Fraction {
 
     // returns the fraction in string form and returns only the numerator if the denominator == 1
     public String getString() {
-        BigInteger one = new BigInteger("1");
-        if(this.getDenominator().equals(one)) {
+        if(this.getDenominator().equals(ONE_BIG_INTEGER)) {
             return this.getNumerator().toString();
         }
         String num = this.getNumerator().toString();
@@ -78,22 +79,19 @@ public class Fraction {
 
     // reduces fraction to lowest terms, i.e. 50/4 -> 25/2
     private void reduce() {
-        BigInteger zero = new BigInteger("0");
-        BigInteger negOne = new BigInteger("-1");
         BigInteger gcd = this.getGCD(this.getNumerator(), this.getDenominator());
         this.numerator = (this.getNumerator().divide(gcd));
         this.denominator = (this.getDenominator().divide(gcd));
-        if(this.getDenominator().compareTo(zero) < 0) {
-            this.numerator.multiply(negOne);
-            this.denominator.multiply(negOne);
+        if(this.getDenominator().compareTo(ZERO_BIG_INTEGER) < 0) {
+            this.numerator = this.numerator.multiply(NEGATIVE_ONE_BIG_INTEGER);
+            this.denominator = this.denominator.multiply(NEGATIVE_ONE_BIG_INTEGER);
         }
     }
 
     // returns the greatest common denominator of 'a' and 'b' using Euclid's algorithm
     public BigInteger getGCD(BigInteger a, BigInteger b) {
         BigInteger r = a.remainder(b);
-        BigInteger zero = new BigInteger("0");
-        if(!r.equals(zero)) {
+        if(!r.equals(ZERO_BIG_INTEGER)) {
             return this.getGCD(b, r);
         }
         return b;

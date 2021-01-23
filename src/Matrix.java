@@ -4,8 +4,9 @@ import java.util.Random;
 
 public class Matrix {
 
-    static final BigInteger ZERO_BIG_INTEGER = new BigInteger("0");
-    static final BigInteger ONE_BIG_INTEGER = new BigInteger("1");
+    static final BigInteger ZERO_BIG_INTEGER = BigInteger.valueOf(0);
+    static final BigInteger ONE_BIG_INTEGER = BigInteger.valueOf(1);
+    static final BigInteger NEGATIVE_ONE_BIG_INTEGER = BigInteger.valueOf(-1);
 
     int rows;
     int columns;
@@ -17,8 +18,6 @@ public class Matrix {
         this.data = new Fraction[rows][columns];
 
         // Makes zero matrix
-        //BigInteger zero = new BigInteger("0");
-        //BigInteger one = new BigInteger("1");
         for(int row = 0; row < this.rows; row++) {
             for(int col = 0; col < this.columns; col++) {
                 data[row][col] = new Fraction(ZERO_BIG_INTEGER, ONE_BIG_INTEGER);
@@ -38,7 +37,6 @@ public class Matrix {
             for (int col = 0; col < this.columns; col++) {
                 int num = getRandomNumber(randRange);
                 BigInteger randBigInteger = new BigInteger(Integer.toString(num));
-                // BigInteger one = new BigInteger("1");
                 this.data[row][col] = new Fraction(randBigInteger, ONE_BIG_INTEGER);
             }
         }
@@ -277,8 +275,7 @@ public class Matrix {
             // get right ratio
             Fraction mult = new Fraction(workingMatrix.data[rowBelow][colPosition], workingMatrix.data[rowPosition][colPosition]);
             // multiply it by -1 because we're subtracting
-            BigInteger negativeOneBigInteger = new BigInteger("-1");
-            mult = mult.multiply(new Fraction(negativeOneBigInteger, ONE_BIG_INTEGER));
+            mult = mult.multiply(new Fraction(NEGATIVE_ONE_BIG_INTEGER, ONE_BIG_INTEGER));
             // perform row operation
             workingMatrix = workingMatrix.rowOperation(rowPosition, rowBelow, mult);
         }
