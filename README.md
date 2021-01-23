@@ -8,7 +8,7 @@ For learning java!
 
 ## To do
 
-- [x] Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`
+- [x] ~~Use `BigInteger` instead of `long` for `numerator` and `denominator` in `Fraction`~~
 - [ ] Make `Fraction` constructor that takes a `BigDecimal` and converts the `Fraction` to `BigInteger`.
 - [ ] `.findUseableRow()` can be improved. There is no need for the second for loop, all searches are being done on the same column.
 - [ ] Method for inverting `Matrix` instance
