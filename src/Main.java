@@ -11,11 +11,13 @@ public class Main {
         System.out.println("\n-----\n");
 
         // long startTime = System.nanoTime();
-        // m1.fastDeterminant();
+        m1.fastDeterminant();
         // long endTime = System.nanoTime();
         // long duration = (endTime - startTime)/1000000;
         // System.out.println(".fastDeterminant() time (ms): " + duration);
 
-        m1.inverse();
+        Matrix inv = m1.inverse();
+        
+        inv.showSelf();
     }
 }

@@ -306,7 +306,7 @@ public class Matrix {
         Matrix workingMatrix = new Matrix(this.rows, this.columns);
         workingMatrix.data = Arrays.copyOf(this.data, this.data.length);
         workingMatrix = workingMatrix.makeUpperTriangular();
-
+        
         Fraction result = new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER);
         for (int row = 0; row < workingMatrix.rows; row++) {
             for (int col = 0; col < workingMatrix.rows; col++) {
@@ -319,17 +319,29 @@ public class Matrix {
         return result;
     }
 
-    public void inverse() {
+    public Matrix inverse() {
         // returns the inverse of a matrix
         Fraction originalDeterminant = this.fastDeterminant();
         Matrix matrixOfMinors = new Matrix(this.columns, this.rows);
-        matrixOfMinors.data = Arrays.copyOf(this.data, this.data.length);
+        // get matrix of minors
         for (int row = 0; row < matrixOfMinors.rows; row++) {
             for (int col = 0; col < matrixOfMinors.columns; col++) {
-                matrixOfMinors.data[row][col] = matrixOfMinors.minorMatrix(row, col).fastDeterminant();
+                matrixOfMinors.data[row][col] = this.minorMatrix(row, col).fastDeterminant();
+                
             }
         }
-        // todo
+        // convert to matrix of cofactors
+        for (int row = 0; row < matrixOfMinors.rows; row++) {
+            for (int col = 0; col < matrixOfMinors.columns; col++) {
+                if( (col % 2 != 0 && row % 2 == 0) || (col % 2 == 0 && row % 2 != 0) ) {
+                    matrixOfMinors.data[row][col] = matrixOfMinors.data[row][col].multiply(new Fraction(NEGATIVE_ONE_BIG_INTEGER, ONE_BIG_INTEGER));
+                }
+            }
+        }
+        // transpose
+        matrixOfMinors = matrixOfMinors.transpose();
+
+        return matrixOfMinors.scale(new Fraction(new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER), originalDeterminant));
 
     }
 }

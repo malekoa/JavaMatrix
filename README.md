@@ -225,3 +225,15 @@ Fraction operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*ro
 
 #### .fastDeterminant()
 Returns a `Fraction` instance that is the determinant of the given `Matrix`. Uses `.makeUpperTriangular()` and so is much faster than `.determinant()`. 
+
+#### .inverse()
+Returns a `Matrix` instance that is the inverse of the given `Matrix`. Uses `.fastDeterminant()`, `.minorMatrix()`, `.transpose()`, and `.scale()` as helper functions.
+
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Matrix inverse = m1.inverse(); // returns the inverse of m1
+```
