@@ -115,9 +115,9 @@ public class Matrix {
     }
 
     // returns a Matrix instance that is scaled to the scalar
-    public Matrix scale(BigInteger scalar) {
+    public Matrix scale(Fraction scalarFraction) {
         Matrix scaledMatrix = new Matrix(this.rows, this.columns);
-        Fraction scalarFraction = new Fraction(scalar, ONE_BIG_INTEGER);
+        //Fraction scalarFraction = new Fraction(scalar, ONE_BIG_INTEGER);
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 scaledMatrix.data[row][col] = this.data[row][col].multiply(scalarFraction);
@@ -315,7 +315,21 @@ public class Matrix {
                 }
             }
         }
-        System.out.println("fastDeterminant: " + result.getString());
+        //System.out.println("fastDeterminant: " + result.getString());
         return result;
+    }
+
+    public void inverse() {
+        // returns the inverse of a matrix
+        Fraction originalDeterminant = this.fastDeterminant();
+        Matrix matrixOfMinors = new Matrix(this.columns, this.rows);
+        matrixOfMinors.data = Arrays.copyOf(this.data, this.data.length);
+        for (int row = 0; row < matrixOfMinors.rows; row++) {
+            for (int col = 0; col < matrixOfMinors.columns; col++) {
+                matrixOfMinors.data[row][col] = matrixOfMinors.minorMatrix(row, col).fastDeterminant();
+            }
+        }
+        // todo
+
     }
 }
