@@ -16,10 +16,14 @@ For learning java!
 ## Fraction class
 
 #### Constructor
-Constructs a `Fraction` instance. Takes a `BigInteger` numerator and a `BigInteger` denominator.
+Constructs a `Fraction` instance. Takes either two `int` variables, two `BigInteger` instances, or two `Fraction` instances.
 ```java
-// construct a new fraction -> "1/2"
-Fraction f = new Fraction(1, 2);
+// construct a new fraction using integers -> "1/2"
+Fraction f1 = new Fraction(1, 2);
+// construct a new fraction using BigIntegers -> "1/2"
+Fraction f2 = new Fraction(BigInteger.valueOf(1), BigInteger.valueOf(2));
+// construct a new fraction using Fractions -> "1/2"
+Fraction f3 = new Fraction(new Fraction(1, 1), new Fraction(2, 1));
 ```
 
 #### .multiply()
@@ -72,24 +76,40 @@ Fraction s2 = f2.getString(); // returns -> "5"
 ```
 
 #### .getGCD()
-Returns a `long` that is the greatest common denominator of 'a' and 'b' using Euclid's algorithm. Used by `.reduce()` to get the greatest common denominator between the numerator and denominator.
+Returns a `BigInteger` that is the greatest common denominator of 'a' and 'b' using Euclid's algorithm. Used by `.reduce()` to get the greatest common denominator between the numerator and denominator.
 ```java
 Fraction f = new Fraction(1, 2);
-long gcd = f.getGCD(10, 20); // -> returns 10
+BigInteger gcd = f.getGCD(10, 20); // -> returns 10
 ```
 
 #### .reduce()
 Reduces fraction to lowest terms. Used by the `Fraction` constructor to reduce reducible fractions.
+
+#### .isEqualTo()
+Checks if fractions are equal. Returns a boolean.
+
+```java
+Fraction f1 = new Fraction(1, 2);
+Fraction f2 = new Fraction(1, 2);
+Fraction f3 = new Fraction(1, 5);
+
+f1.isEqualTo(f2); // -> returns true
+f1.isEqualTo(f3); // -> returns false
+```
 
 <hr>
 
 ## Matrix class
 
 #### Constructor
-Constructs a `Matrix` instance. Takes an `int` for rows and an `int` for columns.
+Constructs a `Matrix` instance. Takes an `int` for rows and columns, and an array of type `Fraction` to create a `Matrix` with specific entries. If an array of entries is given and the length does not match the size of the `Matrix` instance, throws an exception.
 ```java
-// construct a 3x4 matrix
-Matrix m = new Matrix(3, 4);
+// construct a 3x4 matrix with all zero entries
+Matrix m1 = new Matrix(3, 4);
+
+// construct a 2x2 matrix with specific entries
+Fraction[] entries = {new Fraction(1, 2), new Fraction(1, 3), new Fraction(1, 4), new Fraction(1, 5)};
+Matrix m2 = new Matrix(2, 2, entries);
 ```
 
 #### .randomize()
@@ -106,8 +126,8 @@ Prints the `Matrix` instance to the console.
 ```java
 // construct a 3x3 matrix
 Matrix m = new Matrix(3, 3);
-// set all entries to a random number between 0 and 20
-m.randomize(20);
+// set all entries to a random number between 0 and 10
+m.randomize(10);
 
 m.showSelf(); // prints 'm' to console
 ```
@@ -152,14 +172,16 @@ Matrix product = m1.multiply(m2); // returns the result of m1 * m2
 ```
 
 #### .scale()
-Returns a `Matrix` instance that is scaled to the given scalar. Takes an `int`.
+Returns a `Matrix` instance that is scaled to the given scalar. Takes a `Fraction` instance.
 ```java
 // construct a 3x3 matrix
 Matrix m1 = new Matrix(3, 3);
 // randomize entries
 m1.randomize(10);
+// create scalar fraction
+Fraction scalar = new Fraction(5, 1);
 
-Matrix scaledMatrix = m1.scale(5); // scales all entries in m1 by 5
+Matrix scaledMatrix = m1.scale(scalar); // scales all entries in m1 by 5
 ```
 
 #### .getColumn()
@@ -174,7 +196,7 @@ Matrix getColumn = m1.getColumn(0); // returns the 0th column of matrix m1
 ```
 
 #### .transpose()
-Returns a `Matrix` instance that is the transpose of the given `Matrix`. Takes a `Matrix` instance.
+Returns the transpose of the current `Matrix` instance.
 
 ```java
 // construct a 3x3 matrix
@@ -226,6 +248,15 @@ Fraction operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*ro
 #### .fastDeterminant()
 Returns a `Fraction` instance that is the determinant of the given `Matrix`. Uses `.makeUpperTriangular()` and so is much faster than `.determinant()`. 
 
+```java
+// construct a 3x3 matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+Fraction det = m1.fastDeterminant(); // returns the determinant of m1
+```
+
 #### .inverse()
 Returns a `Matrix` instance that is the inverse of the given `Matrix`. Uses `.fastDeterminant()`, `.minorMatrix()`, `.transpose()`, and `.scale()` as helper functions.
 
@@ -236,4 +267,30 @@ Matrix m1 = new Matrix(3, 3);
 m1.randomize(10);
 
 Matrix inverse = m1.inverse(); // returns the inverse of m1
+```
+
+#### .isEqualTo()
+Checks if two `Matrix` instances are equal to each other. Returns a `boolean`.
+
+```java
+// construct two 3x3 matrices
+Matrix m1 = new Matrix(3, 3);
+Matrix m2 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+m2.randomize(10);
+
+m1.isEqualTo(m2); // <- returns a boolean
+```
+
+#### .isOrthogonal()
+Checks if a `Matrix` instance is ortogonal. Returns a `boolean`.
+
+```java
+// construct a square matrix
+Matrix m1 = new Matrix(3, 3);
+// randomize entries
+m1.randomize(10);
+
+m1.isOrthogonal(); // <- returns a boolean
 ```
