@@ -50,6 +50,21 @@ public class Matrix {
         return new Random().nextInt(range);
     }
 
+    public Matrix makeIdentityMatrix() {
+        // takes a matrix and, if square, returns an identity matrix of same size
+        Matrix identityMatrix = new Matrix(this.rows, this.columns);
+        if(this.rows == this.columns) {
+            for (int row = 0; row < this.rows; row++) {
+                for (int col = 0; col < this.columns; col++) {
+                    if(row == col) {
+                        identityMatrix.data[row][col] = new Fraction(1, 1);
+                    }
+                }
+            }
+        }
+        return identityMatrix;
+    }
+
     // sets all entries in a matrix instance to a random number in
     // in range 0, randRange
     public void randomize(int randRange) {
@@ -111,10 +126,6 @@ public class Matrix {
         if (this.columns != multiplicand.rows) {
             throw new ArithmeticException("this.columns = " + this.columns + " | multiplicand.rows = " + multiplicand.rows + " - These two must be equal.");
         }
-        this.showSelf();
-        System.out.println("x");
-        multiplicand.showSelf();
-        System.out.println("=\n");
 
         Matrix product = new Matrix(this.rows, multiplicand.columns);
         for (int row = 0; row < this.rows; row++) {
@@ -137,7 +148,7 @@ public class Matrix {
     // returns a Matrix instance that is scaled to the scalar
     public Matrix scale(Fraction scalarFraction) {
         Matrix scaledMatrix = new Matrix(this.rows, this.columns);
-        //Fraction scalarFraction = new Fraction(scalar, ONE_BIG_INTEGER);
+        
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
                 scaledMatrix.data[row][col] = this.data[row][col].multiply(scalarFraction);
@@ -335,7 +346,6 @@ public class Matrix {
                 }
             }
         }
-        //System.out.println("fastDeterminant: " + result.getString());
         return result;
     }
 
@@ -363,5 +373,28 @@ public class Matrix {
 
         return matrixOfMinors.scale(new Fraction(new Fraction(ONE_BIG_INTEGER, ONE_BIG_INTEGER), originalDeterminant));
 
+    }
+
+    // returns true if matrices contain the same data, false otherwise
+    public boolean isEqualTo(Matrix otherMatrix) {
+        if(this.rows == otherMatrix.rows && this.columns == otherMatrix.columns) {
+            for (int row = 0; row < this.rows; row++) {
+                for (int col = 0; col < this.columns; col++) {
+                    if(!this.data[row][col].isEqualTo(otherMatrix.data[row][col])) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    // returns true if matrix is orthogonal, false otherwise
+    public boolean isOrthogonal() {
+        Matrix product = this.multiply(this.transpose());
+        Matrix identity = new Matrix(this.rows, this.columns).makeIdentityMatrix();
+        
+        return product.isEqualTo(identity);
+        
     }
 }

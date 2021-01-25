@@ -108,4 +108,10 @@ public class Fraction {
         }
         return b;
     }
+
+    // returns true if both fractions are equal, false otherwise
+    public boolean isEqualTo(Fraction otherFraction) {
+        return (this.numerator.equals(otherFraction.numerator) && this.denominator.equals(otherFraction.denominator));
+
+    }
 }
