@@ -12,6 +12,7 @@ public class Matrix {
     int columns;
     Fraction[][] data;
 
+    // constructor that builds a zero matrix
     Matrix(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
@@ -21,6 +22,25 @@ public class Matrix {
         for(int row = 0; row < this.rows; row++) {
             for(int col = 0; col < this.columns; col++) {
                 data[row][col] = new Fraction(ZERO_BIG_INTEGER, ONE_BIG_INTEGER);
+            }
+        }
+    }
+
+    // constructor that takes an array of Fractions (all entries)
+    Matrix(int rows, int columns, Fraction[] entries) {
+        this.rows = rows;
+        this.columns = columns;
+        this.data = new Fraction[rows][columns];
+
+        if( (rows * columns) != entries.length ) {
+            throw new ArithmeticException("Matrix has " + (rows*columns) + " entries and " + entries.length + " entries were supplied.");
+        }
+
+        int inputEntry = 0;
+        for (int row = 0; row < this.rows; row++) {
+            for (int col = 0; col < this.columns; col++) {
+                this.data[row][col] = entries[inputEntry];
+                inputEntry++;
             }
         }
     }

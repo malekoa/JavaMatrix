@@ -2,22 +2,10 @@ public class Main {
 
     public static void main(String[] args) {
         final int SIZE = 3;
-        Matrix m1 = new Matrix(SIZE, SIZE);
-        
-        m1.randomize(10);
-
+        Fraction[] entries = {new Fraction(3, 5), new Fraction(12, 25), new Fraction(16, 25), new Fraction(-4, 5), new Fraction(9, 25), new Fraction(12, 25), new Fraction(0, 1), new Fraction(-4, 5), new Fraction(3, 5)};
+        Matrix m1 = new Matrix(SIZE, SIZE, entries);
         m1.showSelf();
-
-        System.out.println("\n-----\n");
-
-        // long startTime = System.nanoTime();
-        m1.fastDeterminant();
-        // long endTime = System.nanoTime();
-        // long duration = (endTime - startTime)/1000000;
-        // System.out.println(".fastDeterminant() time (ms): " + duration);
-
-        Matrix inv = m1.inverse();
         
-        inv.showSelf();
+        
     }
 }

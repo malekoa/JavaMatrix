@@ -4,23 +4,35 @@ public class Fraction {
     static final BigInteger ZERO_BIG_INTEGER = BigInteger.valueOf(0);
     static final BigInteger ONE_BIG_INTEGER = BigInteger.valueOf(1);
     static final BigInteger NEGATIVE_ONE_BIG_INTEGER = BigInteger.valueOf(-1);
+    static final String DENOMINATOR_NONZERO_WARNING = "Denominator must be nonzero";
 
     private BigInteger numerator;
     private BigInteger denominator;
 
-    // constructor
+    // constructor that takes two big integers
     Fraction(BigInteger numerator, BigInteger denominator) {
         if(denominator.equals(ZERO_BIG_INTEGER)) {
-            throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
+            throw new ArithmeticException(DENOMINATOR_NONZERO_WARNING);
         }
         this.numerator = numerator;
         this.denominator = denominator;
         this.reduce();
     }
 
+    // constructor that takes two integers
+    Fraction(int numerator, int denominator) {
+        if(denominator == 0) {
+            throw new ArithmeticException(DENOMINATOR_NONZERO_WARNING);
+        }
+        this.numerator = BigInteger.valueOf(numerator);
+        this.denominator = BigInteger.valueOf(denominator);
+        this.reduce();
+    }
+
+    // constructor that takes two fractions
     Fraction(Fraction numerator, Fraction denominator) {
         if(denominator.getNumerator().equals(ZERO_BIG_INTEGER)) {
-            throw new ArithmeticException("Fraction constructor received denominator = " + denominator + ". Denominator must be non-zero");
+            throw new ArithmeticException(DENOMINATOR_NONZERO_WARNING);
         }
         Fraction quotient = numerator.divide(denominator);
         this.numerator = quotient.numerator;
