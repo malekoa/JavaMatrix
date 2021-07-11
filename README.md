@@ -1,7 +1,7 @@
 # JavaMatrix
 
-For learning java!
-
+Basic linear algebra operation using Java. 
+ 
 ## Compiling and running
 
 `sh project.sh run` compiles and runs the program from the main class.
