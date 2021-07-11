@@ -155,7 +155,7 @@ m1.randomize(10);
 // make multiplier Fraction
 Fraction mult = new Fraction(2, 1);
 
-Fraction operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*row1 to row2
+Matrix operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*row1 to row2
 ```
 
 #### .fastDeterminant()
