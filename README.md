@@ -133,7 +133,7 @@ Matrix minor = m1.minor(0, 0); // returns the minor of Matrix 'm1' in relation t
 ```
 
 #### .determinant()
-Returns a `Fraction` instance that is the determinant of the given `Matrix`. Finds the determinant using Laplace expansion = very slow. If you want to get the result faster, use `.fastDeterminant()`. Throws an exception if the `Matrix` is not square (if rows != columns).
+Returns a `Fraction` instance that is the determinant of the given `Matrix`. Finds the determinant using Laplace expansion, complexity is O(n!). Throws an exception if the `Matrix` is not square (if rows != columns).
 
 ```java
 // construct a 3x3 matrix
@@ -159,7 +159,7 @@ Matrix operated = m1.rowOperation(0, 1, mult); // returns m1 after adding 2*row1
 ```
 
 #### .fastDeterminant()
-Returns a `Fraction` instance that is the determinant of the given `Matrix`. Uses `.makeUpperTriangular()` and so is much faster than `.determinant()`. 
+Returns a `Fraction` instance that is the determinant of the given `Matrix`. Uses `.makeUpperTriangular()` so complexity is O(n<sup>3</sup>). 
 
 ```java
 // construct a 3x3 matrix
