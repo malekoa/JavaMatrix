@@ -1,6 +1,6 @@
 # JavaMatrix
 
-Basic linear algebra operation using Java. 
+Basic linear algebra operations using Java. 
  
 ## Compiling and running
 
